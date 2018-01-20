@@ -19,7 +19,7 @@ require 'sprockets/railtie'
 Bundler.require(*Rails.groups)
 
 module TheMapShop
-  class Application < Rails::Application
+  class Application < Rails::Application # :nodoc:
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
 
@@ -28,6 +28,9 @@ module TheMapShop
     # -- all .rb files in that directory are automatically loaded.
 
     # Don't generate system test files.
-    config.generators.system_tests = nil
+    config.generators do |g|
+      g.template_engine :slim
+      g.system_tests    nil
+    end
   end
 end
