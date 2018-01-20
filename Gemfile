@@ -34,8 +34,11 @@ gem 'jbuilder', '~> 2.5'
 
 # auth
 gem 'devise'
+gem 'omniauth'
+gem 'omniauth-facebook'
 
 # view
+gem 'coffee-rails'
 gem 'slim-rails'
 
 group :development, :test do
