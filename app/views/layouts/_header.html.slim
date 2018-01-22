@@ -1,0 +1,17 @@
+header.header-container.content-center
+  h1.logo THE MAP SHOP
+
+  nav
+    - if user_signed_in?
+      ul.nav.nav-pills.nav-fill.dropmenu
+        li.nav-item
+          = link_to current_user.name_mr, '#', class: 'nav-link'
+          ul
+            li
+              = link_to 'home', root_path
+            li
+              = link_to '設定', '#'
+        li.nav-item
+        li.nav-item
+        li.nav-item
+        li.nav-item

@@ -15,3 +15,70 @@
  */
 
  @import 'sanitize.css/sanitize.css';
+ @import 'bootstrap/scss/bootstrap.scss';
+
+ ul {
+   padding: 0;
+ }
+
+ .content-center {
+   width: 80%;
+   margin: 0 auto;
+ }
+
+.header-container {
+  h1 {
+    margin: 0;
+  }
+  .logo {
+    color: #04A2FE;
+  }
+}
+
+.dropmenu {
+  &:before, &:after {
+    content: "";
+    display: table;
+  }
+  &:after {
+    clear: both;
+  }
+  li {
+    position: relative;
+    width: 20%;
+    float: left;
+    text-align: center;
+    // border-left: 1px solid #ddd;
+    a {
+      display: block;
+      padding: 15px 0 11px;
+      font-size: 14px;
+      line-height: 1em;
+      text-decoration: none;
+    }
+    ul {
+      position: absolute;
+      z-index: 5;
+      display: none;
+      background-color: #fff;
+      box-shadow: 2px 4px 5px 2px #eee;
+      li {
+        width: 100%;
+        a {
+          padding: 13px 15px;
+          text-align: left;
+          &:hover {
+            background-color: #04A2FE;
+            color: #fff;
+          }
+        }
+      }
+    }
+
+    &:hover {
+      ul {
+        display: block;
+      }
+    }
+  }
+}

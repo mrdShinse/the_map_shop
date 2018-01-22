@@ -22,4 +22,8 @@ class User < ::ApplicationRecord # :nodoc:
       user.skip_confirmation!
     end
   end
+
+  def name_mr
+    "#{try(:name)}さん"
+  end
 end
