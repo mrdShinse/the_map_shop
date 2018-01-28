@@ -1,1 +1,8 @@
-h1 this is Map#index
+.content-center
+  .row
+    - @maps.each do |map|
+      .col-lg
+        = link_to map_path(map) do
+          .card
+            .card-body
+              h5 = map.name
