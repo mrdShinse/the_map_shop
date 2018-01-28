@@ -23,7 +23,7 @@ class User < ::ApplicationRecord # :nodoc:
     end
   end
 
-  def name_mr
+  def name_title
     "#{try(:name)}さん"
   end
 end
