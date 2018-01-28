@@ -2,5 +2,7 @@
 
 .content-center
   #gmap[style="width:100%;height:400px;"]
-
+  .pins-data-list
+    - @map.pins.each do |pin|
+      = pin.as_html_data
 = googlemap_include_tag 'initMapsShowGmap'
