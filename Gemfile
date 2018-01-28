@@ -22,6 +22,7 @@ gem 'omniauth'
 gem 'omniauth-facebook'
 
 # view
+gem 'active_decorator'
 gem 'slim-rails'
 # css
 gem 'sass-rails', '~> 5.0'
