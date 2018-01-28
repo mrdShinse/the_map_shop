@@ -1,10 +1,12 @@
 .container
   .row
-    .col-lg.colored
-      .card
-        .card-body
-          h5 探す
-    .col-lg.colored
-      .card
-        .card-body
-          h5 作る
+    .col-lg
+      = link_to maps_path do
+        .card
+          .card-body
+            h5 探す
+    .col-lg
+      = link_to new_map_path do
+        .card
+          .card-body
+            h5 作る
