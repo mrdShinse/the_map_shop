@@ -10,7 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180120101908) do
+ActiveRecord::Schema.define(version: 20180128032103) do
+
+  create_table "maps", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "user_id"
+    t.string "name", default: "", null: false
+    t.string "memo", default: "", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_maps_on_user_id"
+  end
+
+  create_table "pins", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "map_id"
+    t.string "name", default: "", null: false
+    t.string "memo", default: "", null: false
+    t.integer "priority", default: 0, null: false
+    t.float "lat", limit: 53, default: 0.0, null: false
+    t.float "long", limit: 53, default: 0.0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["lat", "long"], name: "index_pins_on_lat_and_long"
+    t.index ["map_id"], name: "index_pins_on_map_id"
+  end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "email", default: "", null: false
@@ -34,6 +56,7 @@ ActiveRecord::Schema.define(version: 20180120101908) do
     t.datetime "locked_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "name"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
