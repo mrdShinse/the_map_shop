@@ -12,7 +12,4 @@
     - @maps.each do |map|
       .col-lg
         = link_to map_path(map) do
-          .card
-            .card-body
-              h5 = map.name
-              h6 = map.user.name_title
+          = map.as_html_card
