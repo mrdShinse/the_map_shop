@@ -2,6 +2,6 @@
 
 class AddNameToUsers < ActiveRecord::Migration[5.1] # :nodoc:
   def change
-    add_column :users, :name, :string
+    add_column :users, :name, :string, after: :id
   end
 end
