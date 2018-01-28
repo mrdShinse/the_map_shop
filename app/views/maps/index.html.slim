@@ -1,3 +1,12 @@
+= search_form_for @q do |f|
+  .form-group.row
+    .col-sm-2
+    .col-sm-6
+      = f.search_field :name_or_user_name_cont, class: 'form-control', placeholder: 'フリーワード検索'
+    .col-sm-2
+      = f.submit 'submit', class: 'btn btn-primary mb-2'
+    .col-sm-2
+
 .content-center
   .row
     - @maps.each do |map|

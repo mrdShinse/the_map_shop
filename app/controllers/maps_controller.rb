@@ -2,7 +2,8 @@
 
 class MapsController < ApplicationController # :nodoc:
   def index
-    @maps = Map.all.order(:id)
+    @q = Map.ransack(params[:q])
+    @maps = @q.result(distinct: true).includes(:user)
   end
 
   def new; end
