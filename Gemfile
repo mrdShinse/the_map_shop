@@ -14,6 +14,9 @@ gem 'mysql2', '>= 0.3.18', '< 0.5'
 # app-server
 gem 'puma', '~> 3.7'
 
+# configuration
+gem 'config'
+
 # model
 gem 'ransack'
 # auth
