@@ -29,8 +29,11 @@ module TheMapShop
 
     # Don't generate system test files.
     config.generators do |g|
-      g.template_engine :slim
-      g.system_tests    nil
+      g.template_engine     :slim
+      g.system_tests        nil
+      g.fixture_replacement :factory_bot
+      g.factory_bot         true
+      g.factory_bot         dir: 'spec/factories'
     end
   end
 end
