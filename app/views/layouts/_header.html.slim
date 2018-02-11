@@ -1,17 +1,15 @@
-header.header-container.content-center
-  = link_to root_path do
-    h1.logo THE MAP SHOP
+- if user_signed_in?
+  header.header-container.content-center
+    = link_to root_path do
+      h1.logo THE MAP SHOP
 
-  nav
-    - if user_signed_in?
+    nav
       ul.nav.nav-pills.nav-fill.dropmenu
         li.nav-item
           = link_to current_user.name_title, '#', class: 'nav-link'
           ul
             li
-              = link_to 'home', root_path
-            li
-              = link_to '設定', '#'
+              = link_to 'ログアウト', destroy_user_session_path, method: :delete
         li.nav-item
         li.nav-item
         li.nav-item
