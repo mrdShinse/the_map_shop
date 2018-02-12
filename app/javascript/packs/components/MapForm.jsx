@@ -1,5 +1,4 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 
 import CircleButton from '../elements/CircleButton'
@@ -14,8 +13,8 @@ class MapForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: null,
-      name: '',
+      id: props.id || null,
+      name: props.name || '',
       saving: false,
     }
     this.updateMap = this.updateMap.bind(this);
@@ -35,7 +34,7 @@ class MapForm extends React.Component {
       )
     } else {
       request(
-        `../maps/${this.state.id}`,
+        `../../maps/${this.state.id}`,
         this.state,
         (body) => { this.setState({id: body.data.id, saving: false}) },
         (e) => { console.error(e);  this.setState({saving: false}) },
@@ -112,9 +111,4 @@ MapForm.defaultProps = {
 MapForm.propTypes = {
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  ReactDOM.render(
-    <MapForm />,
-    document.getElementById('map-form'),
-  )
-})
+export default MapForm

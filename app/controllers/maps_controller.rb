@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class MapsController < ApplicationController # :nodoc:
+  before_action -> { @map = Map.find(params[:id]) }, only: %i[show edit]
+
   def index
     @q = Map.ransack(params[:q])
     @maps = @q.result(distinct: true).includes(:user)
@@ -28,9 +30,9 @@ class MapsController < ApplicationController # :nodoc:
     end
   end
 
-  def show
-    @map = Map.find(params[:id])
-  end
+  def show; end
+
+  def edit; end
 
   private
 

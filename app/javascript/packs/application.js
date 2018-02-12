@@ -7,4 +7,27 @@
 // To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
 // layout file, like app/views/layouts/application.html.erb
 
-import './components/MapForm.jsx'
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+import MapForm from './components/MapForm';
+
+const componentsIndex = {
+  'map-form': MapForm,
+};
+
+const mountEntries = () => {
+  Object.keys(componentsIndex).forEach((id: string) => {
+    const Component = componentsIndex[id];
+    const node = document.getElementById(id);
+    const props = JSON.parse(node != null ? node.getAttribute('data-props') : '{}');
+    if (node) {
+      ReactDOM.render(
+        <Component {...props} />,
+        node,
+      );
+    }
+  });
+}
+
+document.addEventListener("DOMContentLoaded", mountEntries);
