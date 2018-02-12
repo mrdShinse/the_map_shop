@@ -2,14 +2,17 @@
   "name": "the_map_shop",
   "private": true,
   "dependencies": {
+    "@google/maps": "^0.4.5",
     "@rails/webpacker": "^3.2.0",
     "babel-preset-react": "^6.24.1",
     "bootstrap": "^4.0.0",
     "coffeescript": "1.12.7",
     "prop-types": "^15.6.0",
+    "rails-ujs": "^5.1.4",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "sanitize.css": "^5.0.0"
+    "sanitize.css": "^5.0.0",
+    "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
     "webpack-dev-server": "^2.11.0"
