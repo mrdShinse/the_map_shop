@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 const InputField = props => (
   <input type="text"
          placeholder={props.placeholder}
-         style={styles.container}
+         style={{...props.style, ...styles.container}}
          value={props.value}
          onChange={props.onchange} />
 )

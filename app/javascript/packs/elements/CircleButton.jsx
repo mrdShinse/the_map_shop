@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 const CircleButton = props => (
     <div
-      style={styles.container}
+      style={{...props.style, ...styles.container}}
       onClick={props.onclick} >
       { props.children }
     </div>

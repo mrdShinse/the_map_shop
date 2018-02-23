@@ -16,31 +16,46 @@ class MapForm extends React.Component {
       id: props.id || null,
       name: props.name || '',
       saving: false,
+      search: {
+        input: '',
+        lat: 35.68054,
+        lng: 139.767052,
+      },
+      pins: props.pins,
     }
     this.updateMap = this.updateMap.bind(this);
+    this.searchMap = this.searchMap.bind(this);
+  }
+
+  searchMap() {
+    this.googleMapsClient.geocode({ address: this.state.search.input }).asPromise()
+      .then((res) => {
+        return res.json
+      })
+      .then((body) => {
+        const location = body.results[0].geometry.location
+        this.setState({search: {lat: location.lat, lng: location.lng}})
+        console.log(location)
+        console.log(this.state)
+      })
+      .catch((err) => {
+        console.error(err)
+      })
   }
 
   updateMap() {
     if(this.state.saving) { return }
     this.setState({saving: true})
 
-    if(this.state.id == null) {
-      request(
-        "../maps",
-        this.state,
-        (body) => { this.setState({id: body.data.id, saving: false}) },
-        (e) => { console.error(e);  this.setState({saving: false}) },
-        "POST"
-      )
-    } else {
-      request(
-        `../../maps/${this.state.id}`,
-        this.state,
-        (body) => { this.setState({id: body.data.id, saving: false}) },
-        (e) => { console.error(e);  this.setState({saving: false}) },
-        "PATCH"
-      )
-    }
+    const path = this.state.id == null ? "../maps" : `../../maps/${this.state.id}`
+    const method = this.state.id == null ? "POST" : "PATCH"
+    request(
+      path,
+      this.state,
+      (body) => { this.setState({id: body.data.id, saving: false}) },
+      (e) => { console.error(e);  this.setState({saving: false}) },
+      method,
+    )
   }
 
   googleMapsClient = require('@google/maps').createClient({
@@ -60,13 +75,19 @@ class MapForm extends React.Component {
       width: '100%',
       marginTop: 30,
     },
+    mapSearchInput: {
+      marginTop: 30,
+    },
+    mapSearchButton: {
+
+    },
     pinsListContainer: {
       marginTop: 30,
     },
     pinsListTitle: {
       fontSize: '120%',
     },
-    saveButtonContainer: {
+    saveButton: {
       position: 'absolute',
       right: 70,
       bottom: 60,
@@ -82,30 +103,43 @@ class MapForm extends React.Component {
           onchange={(e) => { this.setState({name: e.target.value}) }}/>
 
         <div style={this.styles.mapSearchContainer}>
-          <Gmap />
+          <Gmap center={this.state.search} />
           <InputField
-            placeholder="地図上の位置を検索" />
+            placeholder="地図上の位置を検索"
+            value={this.state.search.input}
+            onchange={(e) => { this.setState({search: {input: e.target.value} })}}
+            style={this.styles.mapSearchInput}/>
+            <CircleButton
+              onclick={this.searchMap}
+              style={this.styles.mapSearchButton} >
+              検索
+            </CircleButton>
         </div>
 
         <div style={this.styles.pinsListContainer}>
           <div style={this.styles.pinsListTitle}>
             ピンの一覧
           </div>
-          { this.props.pins.map(pin => (<MapPinItem/>)) }
+          {
+            this.state.pins.map(pin => (
+              <MapPinItem
+                key={pin.id}
+                name={pin.name}
+              />
+            ))
+          }
         </div>
-        <div style={this.styles.saveButtonContainer}>
-          <CircleButton
-            onclick={this.updateMap}>
-            更新
-          </CircleButton>
-        </div>
+        <CircleButton
+          onclick={this.updateMap}
+          style={this.styles.saveButton} >
+          更新
+        </CircleButton>
       </div>
     )
   }
 }
 
 MapForm.defaultProps = {
-  pins: [],
 }
 
 MapForm.propTypes = {

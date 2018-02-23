@@ -5,14 +5,30 @@ import PropTypes from 'prop-types'
 export default class Gmap extends React.Component {
 
   componentDidMount () {
-    const map = new window.google.maps.Map(
-      ReactDOM.findDOMNode(this.refs["map"]),
-      {
-        center: new window.google.maps.LatLng(35.729503, 139.710900),
-        zoom: 17,
-        mapTypeId: 'roadmap'
-      }
-    );
+    this.renderMap();
+  }
+  componentDidUpdate() {
+    this.renderMap();
+  }
+
+  renderMap() {
+    const tokyo = {
+      lat: 35.68054,
+      lng: 139.767052
+    }
+    if (window.google != undefined) {
+      const map = new window.google.maps.Map(
+        ReactDOM.findDOMNode(this.refs["map"]),
+        {
+          center: new window.google.maps.LatLng(
+            this.props.center.lat || tokyo.lat,
+            this.props.center.lng || tokyo.lng
+          ),
+          zoom: 17,
+          mapTypeId: 'roadmap'
+        }
+      );
+    }
   }
 
   render() {
@@ -25,7 +41,9 @@ export default class Gmap extends React.Component {
     }
 
     return (
-      <div ref="map" style={styles.container} />
+      <div ref="map" style={styles.container}>
+        cannot render map!
+      </div>
     );
   }
 }

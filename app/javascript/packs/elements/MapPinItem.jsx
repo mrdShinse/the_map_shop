@@ -1,7 +1,10 @@
+import React from 'react'
 import PropTypes from 'prop-types'
 
 const MapPinItem = props => (
-  <div>this is pin</div>
+  <div>
+    {props.name}
+  </div>
 )
 
 MapPinItem.defaultProps = {

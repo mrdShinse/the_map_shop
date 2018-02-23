@@ -2,4 +2,4 @@
 
 .container
   h2 地図の編集
-  #map-form data-props="#{@map.to_json}"
+  #map-form data-props="#{@map.to_json(include: :pins)}"
