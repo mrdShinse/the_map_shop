@@ -16,8 +16,10 @@ class MapForm extends React.Component {
       id: props.id || null,
       name: props.name || '',
       saving: false,
+      input: {
+        geoSearch: '',
+      },
       search: {
-        input: '',
         lat: 35.68054,
         lng: 139.767052,
       },
@@ -28,15 +30,13 @@ class MapForm extends React.Component {
   }
 
   searchMap() {
-    this.googleMapsClient.geocode({ address: this.state.search.input }).asPromise()
+    this.googleMapsClient.geocode({ address: this.state.input.geoSearch }).asPromise()
       .then((res) => {
         return res.json
       })
       .then((body) => {
         const location = body.results[0].geometry.location
         this.setState({search: {lat: location.lat, lng: location.lng}})
-        console.log(location)
-        console.log(this.state)
       })
       .catch((err) => {
         console.error(err)
@@ -106,8 +106,8 @@ class MapForm extends React.Component {
           <Gmap center={this.state.search} />
           <InputField
             placeholder="地図上の位置を検索"
-            value={this.state.search.input}
-            onchange={(e) => { this.setState({search: {input: e.target.value} })}}
+            value={this.state.input.geoSearch}
+            onchange={(e) => { this.setState({input: {geoSearch: e.target.value} })}}
             style={this.styles.mapSearchInput}/>
             <CircleButton
               onclick={this.searchMap}

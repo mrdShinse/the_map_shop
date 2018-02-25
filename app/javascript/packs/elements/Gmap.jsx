@@ -5,13 +5,20 @@ import PropTypes from 'prop-types'
 export default class Gmap extends React.Component {
 
   componentDidMount () {
-    this.renderMap();
-  }
-  componentDidUpdate() {
-    this.renderMap();
+    this.renderMap(this.props);
   }
 
-  renderMap() {
+  componentWillReceiveProps(nextProps) {
+    if(this.shouldUpdateMap(nextProps)) {
+      this.renderMap(nextProps);
+    }
+  }
+
+  shouldUpdateMap(nextProps) {
+    return !((this.props.center.lat == nextProps.center.lat) || (this.props.center.lng == nextProps.center.lng))
+  }
+
+  renderMap(props) {
     const tokyo = {
       lat: 35.68054,
       lng: 139.767052
@@ -21,8 +28,8 @@ export default class Gmap extends React.Component {
         ReactDOM.findDOMNode(this.refs["map"]),
         {
           center: new window.google.maps.LatLng(
-            this.props.center.lat || tokyo.lat,
-            this.props.center.lng || tokyo.lng
+            props.center.lat || tokyo.lat,
+            props.center.lng || tokyo.lng
           ),
           zoom: 17,
           mapTypeId: 'roadmap'
