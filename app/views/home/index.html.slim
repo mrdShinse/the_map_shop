@@ -1,16 +1,23 @@
-h1 THE MAP SHOP
+.container
+  .row
+    .col-lg
+      = link_to maps_path do
+        .card
+          .card-body
+            h5 探す
+    - if user_signed_in?
+      .col-lg
+        = link_to new_map_path do
+          .card
+            .card-body
+              h5 作る
 
-section
-  p
-    | THE MAP SHOP is a platform aim to exchange your knowledge to money.
-    br
-    | for example, the list of coffee shops, onsen hotels or any other places you recommended.
-    br
-    | you can post them here as free or as commerce.
-
-section
-  | seeing is believing.
-  br
-  | LET'S SIGN UP
-  = link_to 'here', new_user_session_path
-  | .
+.content-center[style='margin-top: 30px;']
+  h3
+    - if user_signed_in?
+      = "#{current_user.name_title}の地図一覧"
+  .row
+    - @maps.each do |map|
+      .col-lg
+        = link_to map_path(map) do
+          = map.as_html_card
