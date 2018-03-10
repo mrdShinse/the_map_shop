@@ -1,8 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import {
+  Button,
+  FormControl,
+  Icon,
+  Input,
+  InputLabel,
+} from 'material-ui';
 
-import CircleButton from '../elements/CircleButton'
-import InputField from '../elements/InputField'
 import MapPinItem from '../elements/MapPinItem'
 import Gmap from '../elements/Gmap'
 import request from '../shared/request'
@@ -75,45 +80,43 @@ class MapForm extends React.Component {
       width: '100%',
       marginTop: 30,
     },
-    mapSearchInput: {
-      marginTop: 30,
-    },
-    mapSearchButton: {
-
-    },
     pinsListContainer: {
       marginTop: 30,
     },
     pinsListTitle: {
       fontSize: '120%',
     },
-    saveButton: {
-      position: 'absolute',
-      right: 70,
-      bottom: 60,
-    },
   }
 
   render() {
     return (
       <div style={this.styles.container}>
-        <InputField
-          placeholder="タイトル"
-          value={this.state.name}
-          onchange={(e) => { this.setState({name: e.target.value}) }}/>
-
+        <FormControl>
+          <InputLabel htmlFor="titleInput">タイトル</InputLabel>
+          <Input
+            id="titleInput"
+            placeholder="タイトル"
+            value={this.state.name}
+            onChange={(e) => { this.setState({name: e.target.value}) }}
+          />
+        </FormControl>
         <div style={this.styles.mapSearchContainer}>
           <Gmap center={this.state.search} />
-          <InputField
-            placeholder="地図上の位置を検索"
-            value={this.state.input.geoSearch}
-            onchange={(e) => { this.setState({input: {geoSearch: e.target.value} })}}
-            style={this.styles.mapSearchInput}/>
-            <CircleButton
-              onclick={this.searchMap}
-              style={this.styles.mapSearchButton} >
-              検索
-            </CircleButton>
+          <FormControl>
+            <InputLabel htmlFor="mapSearchInput">地図上の位置を検索</InputLabel>
+            <Input
+              id="mapSearchInput"
+              placeholder="地図上の位置を検索"
+              value={this.state.input.geoSearch}
+              onChange={(e) => { this.setState({input: {geoSearch: e.target.value} })}}
+            />
+          </FormControl>
+          <Button
+            variant="fab"
+            color="primary"
+            onClick={this.searchMap} >
+            <Icon>find_replace</Icon>
+          </Button>
         </div>
 
         <div style={this.styles.pinsListContainer}>
@@ -129,11 +132,12 @@ class MapForm extends React.Component {
             ))
           }
         </div>
-        <CircleButton
-          onclick={this.updateMap}
-          style={this.styles.saveButton} >
-          更新
-        </CircleButton>
+        <Button
+          variant="fab"
+          color="primary"
+          onClick={this.updateMap} >
+          <Icon>edit_icon</Icon>
+        </Button>
       </div>
     )
   }
