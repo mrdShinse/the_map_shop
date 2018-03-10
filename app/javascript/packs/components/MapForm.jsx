@@ -6,9 +6,14 @@ import {
   Icon,
   Input,
   InputLabel,
+  Paper,
+  Table,
+  TableBody,
+  TableHead,
+  TableRow,
+  TableCell,
 } from 'material-ui';
 
-import MapPinItem from '../elements/MapPinItem'
 import Gmap from '../elements/Gmap'
 import request from '../shared/request'
 
@@ -83,24 +88,22 @@ class MapForm extends React.Component {
     pinsListContainer: {
       marginTop: 30,
     },
-    pinsListTitle: {
-      fontSize: '120%',
-    },
   }
 
   render() {
     return (
       <div style={this.styles.container}>
-        <FormControl>
-          <InputLabel htmlFor="titleInput">タイトル</InputLabel>
-          <Input
-            id="titleInput"
-            placeholder="タイトル"
-            value={this.state.name}
-            onChange={(e) => { this.setState({name: e.target.value}) }}
-          />
-        </FormControl>
-        <div style={this.styles.mapSearchContainer}>
+        <Paper style={this.styles.mapSearchContainer}>
+          <FormControl>
+            <InputLabel htmlFor="titleInput">タイトル</InputLabel>
+            <Input
+              id="titleInput"
+              placeholder="タイトル"
+              value={this.state.name}
+              onChange={(e) => { this.setState({name: e.target.value}) }}
+            />
+          </FormControl>
+
           <Gmap center={this.state.search} />
           <FormControl>
             <InputLabel htmlFor="mapSearchInput">地図上の位置を検索</InputLabel>
@@ -117,21 +120,27 @@ class MapForm extends React.Component {
             onClick={this.searchMap} >
             <Icon>find_replace</Icon>
           </Button>
-        </div>
+        </Paper>
 
-        <div style={this.styles.pinsListContainer}>
-          <div style={this.styles.pinsListTitle}>
-            ピンの一覧
-          </div>
-          {
-            this.state.pins.map(pin => (
-              <MapPinItem
-                key={pin.id}
-                name={pin.name}
-              />
-            ))
-          }
-        </div>
+        <Paper  style={this.styles.pinsListContainer}>
+          <Table >
+            <TableHead>
+              <TableRow>
+                <TableCell>ピンの一覧</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {this.state.pins.map(pin => {
+                return (
+                  <TableRow key={pin.id}>
+                    <TableCell>{pin.name}</TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </Paper>
+
         <Button
           variant="fab"
           color="primary"
