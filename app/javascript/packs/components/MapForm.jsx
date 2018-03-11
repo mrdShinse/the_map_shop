@@ -89,7 +89,7 @@ class MapForm extends React.Component {
       marginTop: 30,
     },
     updateButton: {
-      position: 'absolute',	
+      position: 'absolute',
       right: 70,
       bottom: 60,
     }
@@ -109,7 +109,11 @@ class MapForm extends React.Component {
             />
           </FormControl>
 
-          <Gmap center={this.state.search} />
+          <Gmap
+            center={this.state.search}
+            pins={this.state.pins}
+            isMarkerShown={true}
+          />
           <FormControl>
             <InputLabel htmlFor="mapSearchInput">地図上の位置を検索</InputLabel>
             <Input

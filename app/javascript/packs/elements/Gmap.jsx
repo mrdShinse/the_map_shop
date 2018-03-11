@@ -1,56 +1,28 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import PropTypes from 'prop-types'
+import { compose, withProps } from "recompose"
+import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
 
-export default class Gmap extends React.Component {
+import ENV from '../../../../env.json'
 
-  componentDidMount () {
-    this.renderMap(this.props);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if(this.shouldUpdateMap(nextProps)) {
-      this.renderMap(nextProps);
+const Gmap = compose(
+  withProps({
+    googleMapURL: "https://maps.googleapis.com/maps/api/js?key=" + ENV['GOOGLEMAP_KEY'],
+    loadingElement: <div style={{ height: `100%` }} />,
+    containerElement: <div style={{ width: '100%', height: '400px' }} />,
+    mapElement: <div style={{ height: `100%` }} />,
+  }),
+  withScriptjs,
+  withGoogleMap
+)((props) =>
+  <GoogleMap
+    defaultZoom={15}
+    defaultCenter={props.center}
+  >
+    {
+      props.isMarkerShown &&
+      props.pins.map(pin => { return (<Marker key={pin.id} position={{ lat: pin.lat, lng: pin.long }} />); })
     }
-  }
+  </GoogleMap>
+)
 
-  shouldUpdateMap(nextProps) {
-    return !((this.props.center.lat == nextProps.center.lat) || (this.props.center.lng == nextProps.center.lng))
-  }
-
-  renderMap(props) {
-    const tokyo = {
-      lat: 35.68054,
-      lng: 139.767052
-    }
-    if (window.google != undefined) {
-      const map = new window.google.maps.Map(
-        ReactDOM.findDOMNode(this.refs["map"]),
-        {
-          center: new window.google.maps.LatLng(
-            props.center.lat || tokyo.lat,
-            props.center.lng || tokyo.lng
-          ),
-          zoom: 17,
-          mapTypeId: 'roadmap'
-        }
-      );
-    }
-  }
-
-  render() {
-    const styles = {
-      container: {
-        width: '100%',
-        height: 500,
-        backgroundColor: '#aaffaa',
-      },
-    }
-
-    return (
-      <div ref="map" style={styles.container}>
-        cannot render map!
-      </div>
-    );
-  }
-}
+export default Gmap
