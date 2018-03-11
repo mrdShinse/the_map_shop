@@ -88,6 +88,11 @@ class MapForm extends React.Component {
     pinsListContainer: {
       marginTop: 30,
     },
+    updateButton: {
+      position: 'absolute',	
+      right: 70,
+      bottom: 60,
+    }
   }
 
   render() {
@@ -144,7 +149,8 @@ class MapForm extends React.Component {
         <Button
           variant="fab"
           color="primary"
-          onClick={this.updateMap} >
+          onClick={this.updateMap}
+          style={this.styles.updateButton}>
           <Icon>edit_icon</Icon>
         </Button>
       </div>
